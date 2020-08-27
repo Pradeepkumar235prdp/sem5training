@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head class="popup">
+  <!-- CSS only -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+
+  <!-- JS, Popper.js, and jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    </script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+    </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous">
+    </script>
+  <link rel="stylesheet" type="text/css" href="loginform.css">
+  <script src="smartcontract.js"></script>
+  <script src="node_modules/web3/dist/web3.min.js"></script>
+
+
+  <script>
+
+
+    $(document).ready(function () {
+
+
+      $("#loginbutton").click(function () {
+        var username = $("#uname").val();
+        var password = $("#psw").val();
+
+        if (typeof web3 != 'undefined') {
+          web3 = new Web3(web3.currentProvider);
+        } else {
+          web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
+        }
+
+        web3.eth.defaultAccount = web3.eth.accounts[0];
+        var sc = web3.eth.contract(ABI);
+        var tc = sc.at(address);
+        tc.registerUser1(username, password);
+        alert("Login Successfull");
+        alert(username + "," + password);
+
+
+      });
+    });
+
+  </script>
+
+</head>
+
+<body id="mainbody" class="row justify-content-center  ">
+  <div class="loginscr">
+    <h2>Login Screen</h2><br><br><br>
+  </div>
+  <form class="row justify-content-center" action="action_page.php" method="post" id="form1">
+    <div class=" row justify-content-center imgcontainer">
+
+      <img src="login.png" alt="Avatar" class="image"><br>
+
+    </div>
+
+    <div class=" container container1">
+
+      <label style="font-size: 25px;"><b>Username</b></label><br />
+      <input class="uname2" type="text" placeholder="Enter Username" id="uname" required><br /><br />
+      <label style="font-size: 25px;"><b>Password</b></label><br />
+      <input class="uname2" type="password" placeholder="Enter Password" id="psw" required><br /><br />
+      <a href="collectionform/collectionform.html"><input type="button" id="loginbutton" value="Login"></a>
+      <p style="font-size: 20px; font-weight: bolder; color: white; margin-top: 15px;">If not registerd click on below
+        button</p>
+
+      <a href="signupform/signup.html"><button id="signup" type="button">Sign
+          up</button></a><br><br>
+
+      <input type="checkbox" checked="checked" name="remember"> Remember me
+      </label>
+    </div>
+
+    <button type="button" class="cancelbtn">Cancel</button>
+    <span class="fgtpsw"><b>Forgot <b /><a href="forgetpassword.html">password?</a></span>
+  </form>
+</body>
+
+</html>
